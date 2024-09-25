@@ -9,10 +9,10 @@ export const getUsers = async (req, res, next) => {
     }
 }
 
-export const getUserById = async (req, res, next) => {
+export const getUserByUsername = async (req, res, next) => {
     try {
-        const userId = req.params.id;
-        const user = await User.findById(userId);
+        const username = req.params.id;
+        const user = await User.findById(username);
         if(!user) return res.status(404).json({message: "Usuario no encontrado, revisa el ID"})
         res.status(200).json(user);
     } catch (error) {

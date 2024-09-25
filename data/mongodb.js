@@ -12,9 +12,11 @@ const connectDB = async () => {
 }
 
 const productSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+    },
     title: {
-        // type: mongoose.Schema.Types.ObjectId,
-        // ref: 'User',
         type: String,
         required: true
     },
@@ -66,7 +68,23 @@ const userSchema = new mongoose.Schema({
     versionKey: false
 })
 
-const User = mongoose.model('User', userSchema);
-const Email = mongoose.model('Email', emailSchema);
+const cartSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
+    itemId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Product'
+    },
+    quantity: {
+        type: Number,
+        required: true
+    }
+})
 
-export { connectDB, User, Email };
+const User = mongoose.model('User', userSchema);
+const Product = mongoose.model('Product', productSchema);
+const Cart = mongoose.model('Cart', cartSchema);
+
+export { connectDB, User, Product, Cart};
