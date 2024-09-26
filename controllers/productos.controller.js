@@ -3,7 +3,11 @@ import { User } from '../data/mongodb.js';
 
 export const getProducts = async (req, res, next) => {
     try {
+<<<<<<< Updated upstream
         const product = await Product.find().populate('User', 'name username');
+=======
+        const product = await Product.find().populate('userId', 'name username');
+>>>>>>> Stashed changes
         res.status(200).json(product)
     } catch (error) {
         res.status(500).json({message: error.message})

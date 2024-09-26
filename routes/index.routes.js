@@ -4,6 +4,15 @@ import { getAdmin, authLogin, createRegister, getUsers, getUserByUsername, creat
 import {authenticateToken} from '../middlewares/auth.js'
 const router = Router();
 
+<<<<<<< Updated upstream
+=======
+// Rutas
+router.get('/products', getProducts);
+router.get('/products/:id', getProductById);
+router.post('/products', createProduct);
+router.put('/products/:id', updateProduct);
+router.delete('/products/:id', deleteProduct);
+>>>>>>> Stashed changes
 
 
 // Rutas
