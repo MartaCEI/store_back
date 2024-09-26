@@ -3,11 +3,7 @@ import { User } from '../data/mongodb.js';
 
 export const getProducts = async (req, res, next) => {
     try {
-<<<<<<< Updated upstream
-        const product = await Product.find().populate('User', 'name username');
-=======
         const product = await Product.find().populate('userId', 'name username');
->>>>>>> Stashed changes
         res.status(200).json(product)
     } catch (error) {
         res.status(500).json({message: error.message})
@@ -16,8 +12,8 @@ export const getProducts = async (req, res, next) => {
 
 export const getProductById = async (req, res, next) => {
     try {
-        const productId = req.params.id;
-        const product= await Product.findById(productId).populate('remitente destinatario', 'username email');
+        const id = {_id: ObjectId(req.params.id)};
+        const product= await Product.findById(id).populate('userId', 'name username image');
 
         if(!product) return res.status(404).json({message: "Correo no encontrado, revisa el ID"})
         res.status(200).json(product);
@@ -27,21 +23,52 @@ export const getProductById = async (req, res, next) => {
     }
 }
 
-export const createProduct= async (req, res, next) => {
-    try {
-        const {remitente, destinatario, asunto, contenido} = req.body;
+export const createProductByUser = async (req, res) => {
+    const { title, price, description, image, category } = req.body;
+    const userId = req.userId || req.body.userId; // userId puede venir del token de autenticación o en el body
 
-        const newProduct = new Product({remitente, 
-                                    destinatario, 
-                                    asunto, 
-                                    contenido, 
-                                    isImportant:true});
-        await newProduct.save();  // Guuarda el nuevo documento en la base de datos. 
-        res.status(201).json(newProduct)
+    try {
+        // Verificar si el usuario existe
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+
+        // Crear el producto
+        const newProduct = new Product({
+            userId: user._id, // Vincular el producto al usuario
+            title,
+            price,
+            description,
+            image,
+            category
+        });
+
+        // Guardar el producto en la base de datos
+        await newProduct.save();
+
+        // Enviar respuesta
+        res.status(201).json({ message: "Producto creado exitosamente", product: newProduct });
     } catch (error) {
-        res.status(500).json({message: error.message})
+        res.status(500).json({ message: error.message });
     }
-}
+};
+
+// export const createProduct= async (req, res, next) => {
+//     try {
+//         const {remitente, destinatario, asunto, contenido} = req.body;
+
+//         const newProduct = new Product({remitente, 
+//                                     destinatario, 
+//                                     asunto, 
+//                                     contenido, 
+//                                     isImportant:true});
+//         await newProduct.save();  // Guarda el nuevo documento en la base de datos. 
+//         res.status(201).json(newProduct)
+//     } catch (error) {
+//         res.status(500).json({message: error.message})
+//     }
+// }
 
 export const deleteProduct= async (req, res, next) => {
     try {

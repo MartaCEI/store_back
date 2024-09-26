@@ -25,7 +25,6 @@ app.use((err, req, res, next) => {
     })
 })
 
-<<<<<<< Updated upstream
 
 app.get("/", (req, res)=> {
     res.setHeader("Content-Type", "text/html")
@@ -36,20 +35,6 @@ app.get("/", (req, res)=> {
     res.status(200).send(hola)
 });
 
-=======
-app.get("/", (req, res)=> {
-    res.setHeader("Content-Type", "text/html")
-
-    const LandingHTML = `<h1>Bienvenidos a nuestra REST-API</h1>
-    <p> Soy un párrafo </p>
-    <p> Mi dominio es <strong>${URL}</strong></p>
-    `
-    res.status(200).send(LandingHTML)
-});
-
-// app.get("/") Por si queremos enseñar algo en la página de inicio de la API REST 
-// aunque tambien se puede crear un archovo index.html en la carpeta public
->>>>>>> Stashed changes
 
 app.listen(PORT, () => {
     console.log(`Server running on ${URL}`);

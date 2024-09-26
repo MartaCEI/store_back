@@ -81,6 +81,11 @@ const cartSchema = new mongoose.Schema({
         type: Number,
         required: true
     }
+},
+{
+    timestamps: true,
+    strict: false,
+    versionKey: false
 })
 
 const User = mongoose.model('User', userSchema);
