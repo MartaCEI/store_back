@@ -3,7 +3,7 @@ import { User } from '../data/mongodb.js';
 
 export const getProducts = async (req, res, next) => {
     try {
-        const product = await Product.find();
+        const product = await Product.find().populate('User', 'name username');
         res.status(200).json(product)
     } catch (error) {
         res.status(500).json({message: error.message})
