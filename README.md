@@ -5,6 +5,7 @@ npm init -y
 npm nodemon -D
 npm express cors dotenv
 npm mongoose
+npm i multer (archivos)
 npm i bcrypt jsonwebtoken
 
 Mi mockData para este proyecto:

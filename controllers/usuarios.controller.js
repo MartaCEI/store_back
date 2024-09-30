@@ -43,8 +43,6 @@ try {
     // create and sign a new token(contenido purpura, llave privada, opciones(cuado expira))
     const token = jwt.sign({username:username}, JWT_SECRET, {expiresIn: '5h'});
 
-
-
     res.status(200).json({data: user, message: "Correcto login", token})
     } catch (error) {
         res.status(500).json({error: "Error en el servidor"})
