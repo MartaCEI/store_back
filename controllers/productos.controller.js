@@ -12,7 +12,7 @@ export const getProducts = async (req, res, next) => {
 
 export const getProductById = async (req, res, next) => {
     try {
-        const id = {_id: ObjectId(req.params.id)};
+        const id = req.params.id;
         const product= await Product.findById(id).populate('userId', 'name username image');
 
         if(!product) return res.status(404).json({message: "Correo no encontrado, revisa el ID"})
