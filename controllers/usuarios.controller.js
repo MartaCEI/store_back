@@ -26,7 +26,7 @@ export const authLogin = async (req, res, next) => {
 
 try {
     const {username, password} = req.body;
-    const user = users.find((u) => u.username === username)
+    const user = User.findOne({ username: username });
 
     if (!user) {
         return res.status(400).json({message: "Usuario no encontrado"})
