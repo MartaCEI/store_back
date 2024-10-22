@@ -15,6 +15,7 @@ export const MockUser = {
 }
 
 export const getUsers = async (req, res, next) => {
+    const users = await User.find();
     try {
         res.status(200).json({data: users, message: "Correcto users"})
     } catch (error) {
@@ -23,7 +24,6 @@ export const getUsers = async (req, res, next) => {
 }
 
 export const authLogin = async (req, res, next) => {
-
 try {
     const {username, password} = req.body;
     const user = User.findOne({ username: username });
@@ -39,7 +39,6 @@ try {
     }
 
     // Crear jwt y devuelvo el usuario
-
     // create and sign a new token(contenido purpura, llave privada, opciones(cuado expira))
     const token = jwt.sign({username:username}, JWT_SECRET, {expiresIn: '5h'});
 
@@ -66,8 +65,7 @@ export const createRegister =  async (req, res, next) => {
         await newUser.save();
 
         // Obtener el usuario recien creado
-        const user = User.find((u) => u.username === username)
-        // const user = users.find((u) => {id === id})
+        const user = await User.findOne({username: username});
 
         res.status(200).json({data: user, message: "Correcto register"})
 
@@ -78,6 +76,7 @@ export const createRegister =  async (req, res, next) => {
 }
 
 export const getAdmin =  async (req, res, next) => {
+    
     try {
         res.status(200).json({message: "Correcto admin privado"})
     } catch (error) {
